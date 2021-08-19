@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		196FC9EB26CDFC13003F6B07 /* UIScrollViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FC9EA26CDFC13003F6B07 /* UIScrollViewExtension.swift */; };
+		196FC9F126CE1217003F6B07 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FC9F026CE1217003F6B07 /* ListViewController.swift */; };
 		B32565C420F4A90B009E5C68 /* SwiftPullToRefresh.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B34182D71FE943AD001AD3A3 /* SwiftPullToRefresh.framework */; };
 		B32565C520F4A90B009E5C68 /* SwiftPullToRefresh.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B34182D71FE943AD001AD3A3 /* SwiftPullToRefresh.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B34182DC1FE943AD001AD3A3 /* SwiftPullToRefresh.h in Headers */ = {isa = PBXBuildFile; fileRef = B34182DA1FE943AD001AD3A3 /* SwiftPullToRefresh.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -56,6 +57,7 @@
 
 /* Begin PBXFileReference section */
 		196FC9EA26CDFC13003F6B07 /* UIScrollViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScrollViewExtension.swift; sourceTree = "<group>"; };
+		196FC9F026CE1217003F6B07 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		B34182D71FE943AD001AD3A3 /* SwiftPullToRefresh.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftPullToRefresh.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B34182DA1FE943AD001AD3A3 /* SwiftPullToRefresh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftPullToRefresh.h; sourceTree = "<group>"; };
 		B34182DB1FE943AD001AD3A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				B34182E81FE94431001AD3A3 /* AppDelegate.swift */,
 				B34182EA1FE94431001AD3A3 /* ViewController.swift */,
 				B34182FE1FE94A98001AD3A3 /* TestViewController.swift */,
+				196FC9F026CE1217003F6B07 /* ListViewController.swift */,
 				B3D6CBBA1FEB977F005D231C /* SuperCatHeader.swift */,
 				B3C4C4591FEB93A9009A8A5E /* demo-big.gif */,
 				B3C4C4581FEB93A9009A8A5E /* demo-small.gif */,
@@ -299,6 +302,7 @@
 				B34182FF1FE94A98001AD3A3 /* TestViewController.swift in Sources */,
 				B34182E91FE94431001AD3A3 /* AppDelegate.swift in Sources */,
 				B3D6CBBB1FEB977F005D231C /* SuperCatHeader.swift in Sources */,
+				196FC9F126CE1217003F6B07 /* ListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

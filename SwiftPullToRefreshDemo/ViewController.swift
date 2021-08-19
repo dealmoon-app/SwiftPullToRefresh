@@ -30,9 +30,12 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let vc = storyboard!.instantiateViewController(withIdentifier: "TestViewController") as! TestViewController
-        vc.refresh = Refresh.all[indexPath.row]
-        navigationController!.pushViewController(vc, animated: true)
+//        let vc = storyboard!.instantiateViewController(withIdentifier: "TestViewController") as! TestViewController
+//        vc.refresh = Refresh.all[indexPath.row]
+//        navigationController!.pushViewController(vc, animated: true)
+        
+        let vc = ListViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
 }
