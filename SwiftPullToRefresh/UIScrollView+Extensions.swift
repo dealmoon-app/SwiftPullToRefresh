@@ -80,6 +80,13 @@ extension UIScrollView {
                                  action: @escaping () -> Void) {
         spr_header = GIFHeader(data: data, isBig: isBig, height: height, action: action)
     }
+    
+    public func spr_setGIFHeader(images: [UIImage],
+                                 isBig: Bool = false,
+                                 height: CGFloat = 60,
+                                 action: @escaping () -> Void) {
+        spr_header = GIFHeader(images: images, isBig: isBig, height: height, action: action)
+    }
 
     /// GIF + Text header
     ///
@@ -114,15 +121,27 @@ extension UIScrollView {
     }
 
     /// Begin refreshing with header
-    public func spr_beginRefreshing() {
+    public func spr_beginHeaderRefreshing() {
         spr_header?.beginRefreshing()
+    }
+    
+    public func spr_beginFooterRefreshing() {
+        spr_footer?.beginRefreshing()
+    }
+    
+    public func spr_endHeaderRefreshing() {
+        spr_header?.endRefreshing()
+    }
+    
+    public func spr_endFooterRefreshing() {
+        spr_footer?.endRefreshing()
     }
 
     /// End refreshing with both header and footer
-    public func spr_endRefreshing() {
-        spr_header?.endRefreshing()
-        spr_footer?.endRefreshing()
-    }
+//    public func spr_endRefreshing() {
+//        spr_header?.endRefreshing()
+//        spr_footer?.endRefreshing()
+//    }
 
     /// End refreshing with footer and remove it
     public func spr_endRefreshingWithNoMoreData() {

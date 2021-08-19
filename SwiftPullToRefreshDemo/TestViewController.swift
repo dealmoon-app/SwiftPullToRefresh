@@ -29,12 +29,23 @@ class TestViewController: UIViewController {
                 self?.action()
             }
         case .smallGIFHeader:
-            guard
-                let url = Bundle.main.url(forResource: "demo-small", withExtension: "gif"),
-                let data = try? Data(contentsOf: url) else { return }
-            scrollView.spr_setGIFHeader(data: data) { [weak self] in
+//            guard
+//                let url = Bundle.main.url(forResource: "demo-small", withExtension: "gif"),
+//                let data = try? Data(contentsOf: url) else { return }
+//            scrollView.spr_setGIFHeader(data: data) { [weak self] in
+//                self?.action()
+//            }
+            var images = [UIImage]()
+            for i in 1...13 {
+                let name = String(format: "pull_load_loading_%d",i)
+                if let image = UIImage(named: name) {
+                    images.append(image)
+                }
+            }
+            scrollView.spr_setGIFHeader(images: images) { [weak self] in
                 self?.action()
             }
+            
         case .bigGIFHeader:
             guard
                 let url = Bundle.main.url(forResource: "demo-big", withExtension: "gif"),
@@ -60,28 +71,33 @@ class TestViewController: UIViewController {
             }
         case .textFooter:
             scrollView.spr_setTextFooter { [weak self] in
-                self?.action()
+                self?.endFooterAction()
             }
         case .indicatorAutoFooter:
             scrollView.spr_setIndicatorAutoFooter { [weak self] in
-                self?.action()
+                self?.endFooterAction()
             }
         case .textAutoFooter:
             scrollView.spr_setTextAutoFooter { [weak self] in
-                self?.action()
+                self?.endFooterAction()
             }
         }
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        scrollView.spr_beginRefreshing()
+        scrollView.spr_beginHeaderRefreshing()
     }
 
     private func action() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.scrollView.spr_endRefreshing()
+            self.scrollView.spr_endHeaderRefreshing()
         }
     }
 
+    private func endFooterAction() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.scrollView.spr_endFooterRefreshing()
+        }
+    }
 }

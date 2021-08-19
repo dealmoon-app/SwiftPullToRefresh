@@ -124,20 +124,43 @@ open class RefreshView: UIView {
         progress = 1
         isRefreshing = true
         DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.3, animations: {
-                switch self.style {
-                case .header:
+            
+            switch self.style {
+            case .header:
+                UIView.animate(withDuration: 0.3, animations: {
                     scrollView.contentOffset.y = -self.height - scrollView.contentInsetTop
                     scrollView.contentInset.top += self.height
-                case .footer:
+                }, completion: { _ in
+                    self.action()
+                })
+                
+            case .footer:
+                UIView.animate(withDuration: 0.3, animations: {
                     scrollView.contentInset.bottom += self.height
-                case .autoFooter:
-                    scrollView.contentOffset.y = self.height + scrollView.contentSize.height - scrollView.bounds.height + scrollView.contentInsetBottom
-                    scrollView.contentInset.bottom += self.height
-                }
-            }, completion: { _ in
+                }, completion: { _ in
+                    self.action()
+                })
+                
+            case .autoFooter:
+                scrollView.contentOffset.y = self.height + scrollView.contentSize.height - scrollView.bounds.height + scrollView.contentInsetBottom
+                scrollView.contentInset.bottom += self.height
                 self.action()
-            })
+            }
+            
+//            UIView.animate(withDuration: 0.3, animations: {
+//                switch self.style {
+//                case .header:
+//                    scrollView.contentOffset.y = -self.height - scrollView.contentInsetTop
+//                    scrollView.contentInset.top += self.height
+//                case .footer:
+//                    scrollView.contentInset.bottom += self.height
+//                case .autoFooter:
+//                    scrollView.contentOffset.y = self.height + scrollView.contentSize.height - scrollView.bounds.height + scrollView.contentInsetBottom
+//                    scrollView.contentInset.bottom += self.height
+//                }
+//            }, completion: { _ in
+//                self.action()
+//            })
         }
     }
 
