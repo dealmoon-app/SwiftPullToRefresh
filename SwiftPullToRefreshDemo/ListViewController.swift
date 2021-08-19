@@ -26,14 +26,14 @@ class ListViewController: UIViewController {
         self.view.backgroundColor = UIColor.white
         
         self.view.addSubview(self.scrollView)
-        self.scrollView.setPullDownItem(PullDownItem({
+        self.scrollView.setPullDownItem(PullDownItem({ [weak self] in
             
-            self.loadData()
+            self?.loadData()
         }))
         
-        self.scrollView.setPullUpItem(PullUpItem({
+        self.scrollView.setPullUpItem(PullUpItem({ [weak self] in
             
-            self.loadMoreData()
+            self?.loadMoreData()
         }))
     }
     
