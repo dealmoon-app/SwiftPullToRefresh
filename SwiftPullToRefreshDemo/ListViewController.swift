@@ -35,6 +35,8 @@ class ListViewController: UIViewController {
             
             self?.loadMoreData()
         }))
+        
+        //self.scrollView.enablePullUp(false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -46,16 +48,18 @@ class ListViewController: UIViewController {
 
     func loadData() {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             
             self.scrollView.endPullDown()
+            //self.scrollView.enablePullUp(true)
         }
     }
     
     func loadMoreData() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             
             self.scrollView.endPullUp()
+            //self.scrollView.enablePullUp(false)
         }
     }
 }

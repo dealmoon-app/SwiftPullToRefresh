@@ -145,14 +145,19 @@ extension UIScrollView {
 
     /// End refreshing with footer and remove it
     public func spr_endRefreshingWithNoMoreData() {
-        spr_tempFooter = spr_footer
         spr_footer?.endRefreshing { [weak self] in
-            self?.spr_footer = nil
+            self?.spr_disableMoreData()
         }
+    }
+    
+    // 不能加载更多
+    public func spr_disableMoreData() {
+        self.spr_tempFooter = self.spr_footer
+        self.spr_footer = nil
     }
 
     /// Reset footer which is set to no more data
-    public func spr_resetNoMoreData() {
+    public func spr_enableMoreData() {
         if spr_footer == nil {
             spr_footer = spr_tempFooter
         }

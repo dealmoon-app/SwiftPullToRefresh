@@ -53,6 +53,7 @@ extension UIScrollView {
                 
                 item.handler()
             }
+            
         }
     }
     
@@ -78,6 +79,21 @@ extension UIScrollView {
     func endPullUp() {
         
         self.spr_endFooterRefreshing()
+    }
+    
+    // 上拉是否可用（没有更多数据时，不显示底部更多）
+    func enablePullUp(_ enable: Bool) {
+        
+        DispatchQueue.main.async {
+            if enable {
+                // 还能加载更多
+                self.spr_enableMoreData()
+            } else {
+                // 不能加载更多了（没有更多数据）
+                self.spr_disableMoreData()
+            }
+        }
+        
     }
 }
 

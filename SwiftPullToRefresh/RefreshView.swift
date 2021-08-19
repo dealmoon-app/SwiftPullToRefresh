@@ -65,7 +65,7 @@ open class RefreshView: UIView {
     }
 
     open override func willMove(toSuperview newSuperview: UIView?) {
-        guard let scrollView = newSuperview as? UIScrollView, window != nil else {
+        guard let scrollView = newSuperview as? UIScrollView else { // , 去除 window != nil (解决spr_resetNoMoreData不生效）
             clearObserver()
             return
         }
@@ -97,7 +97,9 @@ open class RefreshView: UIView {
     }
 
     private func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if isRefreshing { return }
+        if isRefreshing {
+            return
+        }
 
         switch style {
         case .header:
