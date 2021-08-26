@@ -152,7 +152,9 @@ extension UIScrollView {
     
     // 不能加载更多
     public func spr_disableMoreData() {
-        self.spr_tempFooter = self.spr_footer
+        if spr_footer != nil {
+            spr_tempFooter = spr_footer
+        }
         self.spr_footer = nil
     }
 
