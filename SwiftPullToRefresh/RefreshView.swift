@@ -34,6 +34,9 @@ open class RefreshView: UIView {
     private var isRefreshing = false {
         didSet { didUpdateState(isRefreshing) }
     }
+    
+    // 是否正在停止刷新，避免连续重复产生问题
+    private var isStoping = false
 
     private var progress: CGFloat = 0 {
         didSet { didUpdateProgress(progress) }
@@ -167,9 +170,14 @@ open class RefreshView: UIView {
     }
 
     func endRefreshing(completion: (() -> Void)? = nil) {
-        guard let scrollView = scrollView else { return }
+        guard let scrollView = scrollView else {completion?(); return }
         guard isRefreshing else { completion?(); return }
-
+        guard !isStoping else {
+            completion?()
+            return
+        }
+        isStoping = true
+        
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.3, animations: {
                 switch self.style {
@@ -181,6 +189,7 @@ open class RefreshView: UIView {
             }, completion: { _ in
                 self.isRefreshing = false
                 self.progress = 0
+                self.isStoping = false
                 completion?()
             })
         }
