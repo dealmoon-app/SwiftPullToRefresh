@@ -11,6 +11,7 @@ import UIKit
 private var headerKey: UInt8 = 0
 private var footerKey: UInt8 = 0
 private var tempFooterKey: UInt8 = 0
+private var tempHeaderKey: UInt8 = 0
 
 extension UIScrollView {
 
@@ -42,6 +43,15 @@ extension UIScrollView {
         }
         set {
             objc_setAssociatedObject(self, &tempFooterKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+    
+    private var spr_tempHeader: RefreshView? {
+        get {
+            return objc_getAssociatedObject(self, &tempHeaderKey) as? RefreshView
+        }
+        set {
+            objc_setAssociatedObject(self, &tempHeaderKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 
@@ -144,14 +154,28 @@ extension UIScrollView {
 //    }
 
     /// End refreshing with footer and remove it
-    public func spr_endRefreshingWithNoMoreData() {
-        spr_footer?.endRefreshing { [weak self] in
-            self?.spr_disableMoreData()
+//    public func spr_endRefreshingWithNoMoreData() {
+//        spr_footer?.endRefreshing { [weak self] in
+//            self?.spr_disableFooter()
+//        }
+//    }
+    
+    // 不能下拉刷新
+    public func spr_disableHeader() {
+        if spr_header != nil {
+            spr_tempHeader = spr_header
+        }
+        self.spr_header = nil
+    }
+
+    public func spr_enableHeader() {
+        if spr_header == nil {
+            spr_header = spr_tempHeader
         }
     }
     
     // 不能加载更多
-    public func spr_disableMoreData() {
+    public func spr_disableFooter() {
         if spr_footer != nil {
             spr_tempFooter = spr_footer
         }
@@ -159,7 +183,7 @@ extension UIScrollView {
     }
 
     /// Reset footer which is set to no more data
-    public func spr_enableMoreData() {
+    public func spr_enableFooter() {
         if spr_footer == nil {
             spr_footer = spr_tempFooter
         }
