@@ -54,8 +54,6 @@ open class RefreshView: UIView {
         return superview as? UIScrollView
     }
 
-    private var offsetToken: NSKeyValueObservation?
-    private var stateToken: NSKeyValueObservation?
     private var sizeToken: NSKeyValueObservation?
 
     open override func willMove(toWindow newWindow: UIWindow?) {
@@ -76,13 +74,7 @@ open class RefreshView: UIView {
     }
 
     private func setupObserver(_ scrollView: UIScrollView) {
-        offsetToken = scrollView.observe(\.contentOffset) { [weak self] scrollView, _ in
-            self?.scrollViewDidScroll(scrollView)
-        }
-        stateToken = scrollView.observe(\.panGestureRecognizer.state) { [weak self] scrollView, _ in
-            guard scrollView.panGestureRecognizer.state == .ended else { return }
-            self?.scrollViewDidEndDragging(scrollView)
-        }
+        
         if style == .header {
             frame = CGRect(x: 0, y: -height, width: scrollView.bounds.width, height: height)
         } else {
@@ -94,12 +86,10 @@ open class RefreshView: UIView {
     }
 
     private func clearObserver() {
-        offsetToken?.invalidate()
-        stateToken?.invalidate()
         sizeToken?.invalidate()
     }
 
-    private func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if isRefreshing {
             return
         }
@@ -118,7 +108,7 @@ open class RefreshView: UIView {
         }
     }
 
-    private func scrollViewDidEndDragging(_ scrollView: UIScrollView) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView) {
         if isRefreshing || progress < 1 || style == .autoFooter { return }
         beginRefreshing()
     }

@@ -12,10 +12,45 @@ private var headerKey: UInt8 = 0
 private var footerKey: UInt8 = 0
 private var tempFooterKey: UInt8 = 0
 private var tempHeaderKey: UInt8 = 0
+private var refreshContextKey: UInt8 = 0
+
+class ScrollViewRefreshContext {
+    var offsetToken: NSKeyValueObservation?
+    var stateToken: NSKeyValueObservation?
+    
+    func observeScrollView(scrollView: UIScrollView) {
+        if offsetToken == nil {
+            offsetToken = scrollView.observe(\.contentOffset) { [weak self] scrollView, _ in
+                scrollView.spr_header?.scrollViewDidScroll(scrollView) // 先通知下拉刷新
+                scrollView.spr_footer?.scrollViewDidScroll(scrollView) // 再上拉刷新
+            }
+        }
+        
+        if stateToken == nil {
+            stateToken = scrollView.observe(\.panGestureRecognizer.state) { [weak self] scrollView, _ in
+                guard scrollView.panGestureRecognizer.state == .ended else { return }
+                
+                scrollView.spr_header?.scrollViewDidEndDragging(scrollView)
+                scrollView.spr_footer?.scrollViewDidEndDragging(scrollView)
+            }
+        }
+    }
+}
 
 extension UIScrollView {
+    
+    private func getRefreshContext() -> ScrollViewRefreshContext {
+        if let context = objc_getAssociatedObject(self, &refreshContextKey) as? ScrollViewRefreshContext {
+            // 已经存在
+            return context
+        }
+        // 没有存在，新建
+        let context = ScrollViewRefreshContext()
+        objc_setAssociatedObject(self, &refreshContextKey, context, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        return context
+    }
 
-    private var spr_header: RefreshView? {
+    var spr_header: RefreshView? {
         get {
             return objc_getAssociatedObject(self, &headerKey) as? RefreshView
         }
@@ -23,10 +58,11 @@ extension UIScrollView {
             spr_header?.removeFromSuperview()
             objc_setAssociatedObject(self, &headerKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             newValue.map { insertSubview($0, at: 0) }
+            getRefreshContext().observeScrollView(scrollView: self)
         }
     }
 
-    private var spr_footer: RefreshView? {
+    var spr_footer: RefreshView? {
         get {
             return objc_getAssociatedObject(self, &footerKey) as? RefreshView
         }
@@ -34,6 +70,7 @@ extension UIScrollView {
             spr_footer?.removeFromSuperview()
             objc_setAssociatedObject(self, &footerKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             newValue.map { insertSubview($0, at: 0) }
+            getRefreshContext().observeScrollView(scrollView: self)
         }
     }
 

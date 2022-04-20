@@ -26,17 +26,10 @@ class ListViewController: UIViewController {
         self.view.backgroundColor = UIColor.white
         
         self.view.addSubview(self.scrollView)
-        self.scrollView.setPullDownItem(PullDownItem({ [weak self] in
-            
-            self?.loadData()
-        }))
         
-        self.scrollView.setPullUpItem(PullUpItem({ [weak self] in
-            
-            self?.loadMoreData()
-        }))
+        self.scrollView.setHeaderPull(target: self, selector: #selector(handleHeaderPull(item:)))
+        self.scrollView.setFooterPull(target: self, selector: #selector(handleFooterPull(item:)))
         
-        //self.scrollView.enablePullUp(false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -45,21 +38,25 @@ class ListViewController: UIViewController {
         self.scrollView.frame = self.view.bounds
         self.scrollView.contentSize = CGSize(width: self.view.bounds.size.width, height: 1000)
     }
-
-    func loadData() {
-        
+    
+    @objc func handleHeaderPull(item: PullItem) {
+        // 下拉刷新
+        self.scrollView.disableFooterPull(true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             
-            self.scrollView.endPullDown()
-            //self.scrollView.enablePullUp(true)
+            self.scrollView.endHeaderPull()
+            self.scrollView.disableFooterPull(false)
         }
     }
-    
-    func loadMoreData() {
+
+    @objc func handleFooterPull(item: PullItem) {
+        // 上拉加载更多
+        self.scrollView.disableHeaderPull(true)
+      
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             
-            self.scrollView.endPullUp()
-            //self.scrollView.enablePullUp(false)
+            self.scrollView.endFooterPull()
+            self.scrollView.disableHeaderPull(false)
         }
     }
 }
