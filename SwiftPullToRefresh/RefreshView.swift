@@ -31,12 +31,12 @@ open class RefreshView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var isRefreshing = false {
+    public var isRefreshing = false {
         didSet { didUpdateState(isRefreshing) }
     }
     
     // 是否正在停止刷新，避免连续重复产生问题
-    var isStoping = false
+    public var isStoping = false
 
     private var progress: CGFloat = 0 {
         didSet { didUpdateProgress(progress) }
