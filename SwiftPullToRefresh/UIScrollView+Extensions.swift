@@ -50,7 +50,7 @@ extension UIScrollView {
         return context
     }
 
-    public var spr_header: RefreshView? {
+    var spr_header: RefreshView? {
         get {
             return objc_getAssociatedObject(self, &headerKey) as? RefreshView
         }
@@ -62,7 +62,7 @@ extension UIScrollView {
         }
     }
 
-    public var spr_footer: RefreshView? {
+    var spr_footer: RefreshView? {
         get {
             return objc_getAssociatedObject(self, &footerKey) as? RefreshView
         }
